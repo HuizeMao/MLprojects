@@ -1,0 +1,1 @@
+function [cost, grad] = CostGradFunc(x)
