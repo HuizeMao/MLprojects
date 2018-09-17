@@ -1,6 +1,8 @@
-load("mnist.mat");
+I = imread("mnist.mat");
+I = double(I);
+
 X = trainX; % X size: 60,000 *784
-y = trainY;
+y = trainY(:);
 m = size(X,1);
 n = size(X,2);
 
@@ -11,4 +13,7 @@ Output_Neurons = 10;
 %Theta1 size: 15 * 784+1
 %Theta2 size: 10 * 15+1
 Init_Theta = Initialize_Theta(Input_Neurons,Hiddden_Neurons,Output_Neurons);
-%
+cost = ones(m,1);
+  for i = 1:m
+    cost(i) = CostGradFunc(X(i,:),y(i),Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons);
+  end
