@@ -1,3 +1,3 @@
-function g = sigmoid(theta,X)
-  g = 1/(1 + exp(X * theta'))
+function g = sigmoid(z)
+  g = 1./(1 + exp(z));
 end
