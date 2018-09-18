@@ -1,9 +1,8 @@
-I = load("mnist.mat");
-I = double(I);
 load("mnist.mat");
-
-X = trainX; % X size: 60,000 *784
-y = trainY; % y size: 60,000 * 1 
+ % X size: 60,000 *784
+X = double(trainX);
+y = double(trainY); % y size: 60,000 * 1
+y = y';
 m = size(X,1);
 n = size(X,2);
 
