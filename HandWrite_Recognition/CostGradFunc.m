@@ -5,6 +5,7 @@ function [J] = CostGradFunc(X,Y,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_
   %Theta1 size: 15 * 784+1
   %Theta2 size: 10 * 15+1
   %X size: 1 * 784
+  m = size(X,1);
   n = size(X,2);
   a1 = [1;X(:)];
   %a1 size: 785 * 1
@@ -16,7 +17,7 @@ function [J] = CostGradFunc(X,Y,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_
   hypo = sigmoid(z3);
   %hypo size: 10 * 1
   eye_matrix = eye(Output_Neurons);
-  y_matrx = eye_matrix(y,:)
-  J = (1/m) * ((-y_matrx * log(hypo)) - (1-y_matrix) * log(1-hypo));
-
+  y_matrix = eye_matrix(Y,:);
+  J = (1/m) * ((-y_matrix * log(hypo)) - (1-y_matrix) * log(1-hypo));
+  J = trace(J);
 end
