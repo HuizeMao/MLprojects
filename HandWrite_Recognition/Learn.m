@@ -5,6 +5,11 @@ y = double(trainY); % y size: 60,000 * 1
 y = y';
 m = size(X,1);
 n = size(X,2);
+TrainSize = m * 0.6;
+CVSize = m * 0.2;
+TrainX = X(1:TrainSize,:);
+CV_X = X(TrainSize+1:(TrainSize) + CVSize,:);
+Test_X = X((TrainSize+1) + CVSize:end,:);
 
 NetworkLayers = 3;
 Input_Neurons = 784;
