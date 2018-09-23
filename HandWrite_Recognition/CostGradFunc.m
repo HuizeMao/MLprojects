@@ -19,6 +19,7 @@ function [J] = CostFunc(X,Y,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neur
   %hypo size: 10 * 48000
   eye_matrix = eye(Output_Neurons);
   y_matrix = eye_matrix(Y+1,:);
-  J = (1/m) * ((-y_matrix * log(hypo)) - (1-y_matrix) * log(1-hypo));
+  regularized_term = lambda/(2*m) * sum(sum(theta1(:,2:end).^2)) + sum(sum(theta2(:,2:end).^2))
+  J = ((1/m) * ((-y_matrix * log(hypo)) - (1-y_matrix) * log(1-hypo)))+regularized_term;
   J = trace(J);
 end
