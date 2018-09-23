@@ -5,11 +5,16 @@ y = double(trainY); % y size: 60,000 * 1
 y = y';
 m = size(X,1);
 n = size(X,2);
-TrainSize = m * 0.6;
+%set Cross Validation set
+TrainSize = m * 0.8;
 CVSize = m * 0.2;
+
 TrainX = X(1:TrainSize,:);
-CV_X = X(TrainSize+1:(TrainSize) + CVSize,:);
-Test_X = X((TrainSize+1) + CVSize:end,:);
+CV_X = X(TrainSize+1:end,:);
+testX = testX;
+TrainY = y(1:TrainSize,:);
+CV_Y = y(TrainSize+1:end,:);
+testY = testY';
 
 NetworkLayers = 3;
 Input_Neurons = 784;
@@ -18,7 +23,4 @@ Output_Neurons = 10;
 %Theta1 size: 15 * 784+1
 %Theta2 size: 10 * 15+1
 Init_Theta = Initialize_Theta(Input_Neurons,Hiddden_Neurons,Output_Neurons);
-cost = ones(m,1);
-  for i = 1:m
-    cost(i) = CostGradFunc(X(i,:),y(i),Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons);
-  end
+J = CostFunc(TrainX,TrainY,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons);
