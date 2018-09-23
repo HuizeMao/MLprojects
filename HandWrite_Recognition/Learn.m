@@ -26,4 +26,4 @@ Output_Neurons = 10;
 Init_Theta = Initialize_Theta(Input_Neurons,Hiddden_Neurons,Output_Neurons);
 %Cost function regularized
 lambda = 0;
-J = CostFunc(TrainX,TrainY,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
+J = CostGradFunc(TrainX,TrainY,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda)
