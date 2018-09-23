@@ -20,7 +20,10 @@ NetworkLayers = 3;
 Input_Neurons = 784;
 Hiddden_Neurons = 15;
 Output_Neurons = 10;
+
 %Theta1 size: 15 * 784+1
 %Theta2 size: 10 * 15+1
 Init_Theta = Initialize_Theta(Input_Neurons,Hiddden_Neurons,Output_Neurons);
-J = CostFunc(TrainX,TrainY,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons);
+%Cost function regularized
+lambda = 0;
+J = CostFunc(TrainX,TrainY,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
