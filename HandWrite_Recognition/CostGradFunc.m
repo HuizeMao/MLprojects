@@ -19,14 +19,11 @@ function [J] = CostGradFunc(X,Y,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_
   %hypo size: 10 * 48000
   eye_matrix = eye(Output_Neurons);
   y_matrix = eye_matrix(Y+1,:);
-  
+  hypo_part = hypo(:,1:10000);
+  y_part = y_matrix(1:10000,:);
+
   regularized_term = lambda/(2*m) * (sum(sum(theta1(:,2:end).^2)) + sum(sum(theta2(:,2:end).^2)));
- % J = J + ((1/m) * ((-y_matrix * log(hypo)) - (1-y_matrix) * log(1-hypo)));
-  J = J + (1/m * (-y_matrix * log(hypo) - (1-y_matrix) * log(1 - hypo)));
-
+  J = J + ((1/m) * ((-y_part * log(hypo_part)) - (1-y_part) * log(1-hypo_part)));
+  size(-y_part)
+  size(hypo_part)
   J = trace(J);
-  size(-y_matrix) 
-  size(log(hypo))
-  size(1-y_matrix)
-
-end
