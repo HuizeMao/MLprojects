@@ -20,10 +20,13 @@ NetworkLayers = 3;
 Input_Neurons = 784;
 Hiddden_Neurons = 15;
 Output_Neurons = 10;
-
+%plot data
+sel = randperm(size(X,1));
+sel = sel(1:100);
+Display_Data(X(sel, :));
 %Theta1 size: 15 * 784+1
 %Theta2 size: 10 * 15+1
 Init_Theta = Initialize_Theta(Input_Neurons,Hiddden_Neurons,Output_Neurons);
-%Cost function regularized
-lambda = 0;
-J = CostGradFunc(TrainX,TrainY,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
+%Cost function regularized & grandient regularized
+lambda = 10;
+[J,Grad] = CostGradFunc(TrainX,TrainY,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
