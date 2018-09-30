@@ -17,7 +17,7 @@ function [J, Grad] = CostGradFunc(X,Y,Init_Theta,Input_Neurons,Hiddden_Neurons,O
   z3 = theta2 * a2;
   hypo = sigmoid(z3);
   %hypo size: 10 * 48000
-  eye_matrix = eye(Output_Neurons);
+  eye_matrix = eye(10);
   y_matrix = eye_matrix(Y+1,:); % size = 48000 * 10
   hypo_part = hypo(:,1:10000);
   y_part = y_matrix(1:10000,:);
