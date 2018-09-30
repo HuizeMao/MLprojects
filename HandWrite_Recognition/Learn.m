@@ -28,5 +28,10 @@ Display_Data(X(sel, :));
 %Theta2 size: 10 * 15+1
 Init_Theta = Initialize_Theta(Input_Neurons,Hiddden_Neurons,Output_Neurons);
 %Cost function regularized & grandient regularized
-lambda = 10;
+lambda = 1;
 [J,Grad] = CostGradFunc(TrainX,TrainY,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
+
+%Train Neural Network
+options = optimset('MaxIter', 50);
+costFunction = @(p) CostGradFunc(X,y,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
+[theta, cost] = fmincg(costFunction, initial_nn_params, options);
