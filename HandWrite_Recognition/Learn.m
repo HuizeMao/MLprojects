@@ -32,6 +32,10 @@ lambda = 1;
 [J,Grad] = CostGradFunc(TrainX,TrainY,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
 
 %Train Neural Network
+fprintf('\nTraining Neural Network... \n')
 options = optimset('MaxIter', 50);
 costFunction = @(p) CostGradFunc(X,y,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
-[theta, cost] = fmincg(costFunction, initial_nn_params, options);
+[theta, cost] = fmincg(costFunction, Init_Theta, options);
+Theta1 = reshape(Init_Theta(1:num_theta1),Hiddden_Neurons,Input_Neurons+1);
+Theta2 =  reshape(Init_Theta(num_theta1+1:end),Output_Neurons,Hiddden_Neurons+1);
+%predict the handwrite recognition and give accuracy
