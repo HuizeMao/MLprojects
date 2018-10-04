@@ -1,4 +1,5 @@
-load("mnist.mat");
+%load data
+load('mnist.mat');
  % X size: 60,000 *784
 X = double(trainX);
 y = double(trainY); % y size: 60,000 * 1
@@ -15,7 +16,7 @@ testX = testX;
 TrainY = y(1:TrainSize,:);
 CV_Y = y(TrainSize+1:end,:);
 testY = testY';
-
+%construct neural network modal
 NetworkLayers = 3;
 Input_Neurons = 784;
 Hiddden_Neurons = 15;
@@ -26,6 +27,8 @@ sel = sel(1:100);
 Display_Data(X(sel, :));
 %Theta1 size: 15 * 784+1
 %Theta2 size: 10 * 15+1
+
+%randomly initialize theta
 Init_Theta = Initialize_Theta(Input_Neurons,Hiddden_Neurons,Output_Neurons);
 %Cost function regularized & grandient regularized
 lambda = 1;
@@ -36,6 +39,11 @@ fprintf('\nTraining Neural Network... \n')
 options = optimset('MaxIter', 50);
 costFunction = @(p) CostGradFunc(X,y,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
 [theta, cost] = fmincg(costFunction, Init_Theta, options);
+%resize Theta
+num_theta1 = Hiddden_Neurons * (Input_Neurons +1);
 Theta1 = reshape(Init_Theta(1:num_theta1),Hiddden_Neurons,Input_Neurons+1);
 Theta2 =  reshape(Init_Theta(num_theta1+1:end),Output_Neurons,Hiddden_Neurons+1);
 %predict the handwrite recognition and give accuracy
+Prediction = predict(Theta1,Theta2,X);
+accuracy = mean(double(Prediction == y)) * 100;
+fprintf('\nLearning Accuracy: %f\n', accuracy)
