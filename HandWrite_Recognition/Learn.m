@@ -1,11 +1,13 @@
 %load data
 load('mnist.mat');
- % X size: 60,000 *784
+
+% X size: 60,000 *784
 X = double(trainX);
 y = double(trainY); % y size: 60,000 * 1
 y = y';
 m = size(X,1);
 n = size(X,2);
+
 %set Cross Validation set
 TrainSize = m * 0.8;
 CVSize = m * 0.2;
@@ -26,6 +28,7 @@ NetworkLayers = 3;
 Input_Neurons = 784;
 Hiddden_Neurons = 15;
 Output_Neurons = 10;
+
 %plot data
 sel = randperm(size(X,1));
 sel = sel(1:100);
@@ -35,15 +38,17 @@ Display_Data(X(sel, :));
 
 %randomly initialize theta
 Init_Theta = Initialize_Theta(Input_Neurons,Hiddden_Neurons,Output_Neurons);
+
 %Cost function regularized & grandient regularized
 lambda = 1;
 [J,Grad] = CostGradFunc(X_part,y_part,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
 %gradient check 
 GradientCheck(lambda);
+
 %Train Neural Network
 fprintf('\nTraining Neural Network... \n')
 options = optimset('MaxIter', 50);
-costFunction = @(p) CostGradFunc(X,y,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
+costFunction = @(p) CostGradFunc(X_part,y_part,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
 [theta, cost] = fmincg(costFunction, Init_Theta, options);
 %resize Theta
 num_theta1 = Hiddden_Neurons * (Input_Neurons +1);
