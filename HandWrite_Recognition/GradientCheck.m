@@ -28,7 +28,8 @@ y  = 1 + mod(1:m, num_labels)';
 nn_params = [Theta1(:) ; Theta2(:)];
 
 % Short hand for cost function  X,Y,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda
-costFunc = @(p) CostGradFunc(X, y, p, input_layer_size, ...
+% Made another copy of cost fuction in order to avoid the index error
+costFunc = @(p) CostGradFuncDebug(X, y, p, input_layer_size, ...
                                hidden_layer_size, num_labels,lambda);
 
 [cost, grad] = costFunc(nn_params);

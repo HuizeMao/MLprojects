@@ -16,6 +16,11 @@ testX = testX;
 TrainY = y(1:TrainSize,:);
 CV_Y = y(TrainSize+1:end,:);
 testY = testY';
+
+%due to memory limit, shrink train size
+X_part = TrainX(1:10000,:);
+y_part = TrainY(1:10000,:);
+
 %construct neural network modal
 NetworkLayers = 3;
 Input_Neurons = 784;
@@ -32,8 +37,9 @@ Display_Data(X(sel, :));
 Init_Theta = Initialize_Theta(Input_Neurons,Hiddden_Neurons,Output_Neurons);
 %Cost function regularized & grandient regularized
 lambda = 1;
-[J,Grad] = CostGradFunc(TrainX,TrainY,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
-
+[J,Grad] = CostGradFunc(X_part,y_part,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
+%gradient check 
+GradientCheck(lambda);
 %Train Neural Network
 fprintf('\nTraining Neural Network... \n')
 options = optimset('MaxIter', 50);
