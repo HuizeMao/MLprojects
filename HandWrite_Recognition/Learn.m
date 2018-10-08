@@ -42,12 +42,12 @@ Init_Theta = Initialize_Theta(Input_Neurons,Hiddden_Neurons,Output_Neurons);
 %Cost function regularized & grandient regularized
 lambda = 1;
 [J,Grad] = CostGradFunc(X_part,y_part,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
-%gradient check 
+%gradient check
 GradientCheck(lambda);
 
 %Train Neural Network
 fprintf('\nTraining Neural Network... \n')
-options = optimset('MaxIter', 50);
+options = optimset('MaxIter', 1000);
 costFunction = @(p) CostGradFunc(X_part,y_part,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
 [theta, cost] = fmincg(costFunction, Init_Theta, options);
 %resize Theta
