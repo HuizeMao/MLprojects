@@ -45,16 +45,28 @@ lambda = 1;
 %gradient check
 GradientCheck(lambda);
 
-%Train Neural Network
+%%Train Neural Network
 fprintf('\nTraining Neural Network... \n')
-options = optimset('MaxIter', 1000);
-costFunction = @(p) CostGradFunc(X_part,y_part,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
-[theta, cost] = fmincg(costFunction, Init_Theta, options);
+
+theta = TrainNeurals(X_part,y_part,lambda,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons);
+
 %resize Theta
 num_theta1 = Hiddden_Neurons * (Input_Neurons +1);
 Theta1 = reshape(Init_Theta(1:num_theta1),Hiddden_Neurons,Input_Neurons+1);
 Theta2 =  reshape(Init_Theta(num_theta1+1:end),Output_Neurons,Hiddden_Neurons+1);
+
 %predict the handwrite recognition and give accuracy
 Prediction = predict(Theta1,Theta2,X);
 accuracy = mean(double(Prediction == y)) * 100;
 fprintf('\nLearning Accuracy: %f\n', accuracy)
+
+%Build Learning Curve to see next step
+[error_train, error_val] = LearningCurve(X_part(1:100,:),y_part(1:100,:),CV_X(1:100,:),CV_Y(1:100,:),lambda,Input_Neurons,Hiddden_Neurons,Output_Neurons,Init_Theta);
+plot(1:100, error_train, 1:100, error_val);
+title('Learning curve for neural network')
+legend('Train', 'Cross Validation')
+xlabel('Number of training examples')
+ylabel('Error')
+axis([0 100 0 150])
+
+%CV set for select lambda
