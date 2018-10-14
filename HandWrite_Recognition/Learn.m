@@ -48,7 +48,7 @@ GradientCheck(lambda);
 %%Train Neural Network
 fprintf('\nTraining Neural Network... \n')
 
-theta = TrainNeurals(X_part,y_part,lambda,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons);
+%*theta = TrainNeurals(X_part,y_part,lambda,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons);
 
 %resize Theta
 num_theta1 = Hiddden_Neurons * (Input_Neurons +1);
