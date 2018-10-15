@@ -9,13 +9,14 @@ function [J, Grad] = CostGradFunc(X,Y,Init_Theta,Input_Neurons,Hiddden_Neurons,O
   n = size(X,2);
   a1 = [ones(m,1),X];
   %a1 size: 48000 * 785
-  z2 = theta1 * a1';
-  %z2 size: 15 * 48000
-  a2 = sigmoid(z2);
-  a2 = [ones(1,size(a2,2));a2];
+  z1 = theta1 * a1';
+  %z1 = a2 size: 15 * 48000
+  a2 = sigmoid(z1);
+  one = ones(1,(size(X,1)));
+  a2 = [one;a2];
   %a2 size: 16 * 48000
-  z3 = theta2 * a2;
-  hypo = sigmoid(z3);
+  z2 = theta2 * a2;
+  hypo = sigmoid(z2);
   %hypo size: 10 * 48000
   eye_matrix = eye(Output_Neurons);
   y_matrix = eye_matrix(Y+1,:); % size = 48000 * 10
@@ -28,7 +29,7 @@ function [J, Grad] = CostGradFunc(X,Y,Init_Theta,Input_Neurons,Hiddden_Neurons,O
 
 %Calculate Gradient
   OutPutGrad = hypo - y_matrix' ; %size = 10 * 48000
-  Second_delta = (theta2' * OutPutGrad) .* SigmoidTranspose(a2); % size = 16 * 48000
+  Second_delta = (theta2' * OutPutGrad) .* SigmoidTranspose([one;z1]); % size = 16 * 48000
   Second_delta = Second_delta(2:end,:);% size = 15 * 48000
   regularized_1 = (lambda/m) * theta1(:,2:end);
   regularized_2 = (lambda/m) * theta2(:,2:end);

@@ -52,13 +52,13 @@ fprintf('\nTraining Neural Network... \n')
 
 %resize Theta
 num_theta1 = Hiddden_Neurons * (Input_Neurons +1);
-Theta1 = reshape(Init_Theta(1:num_theta1),Hiddden_Neurons,Input_Neurons+1);
-Theta2 =  reshape(Init_Theta(num_theta1+1:end),Output_Neurons,Hiddden_Neurons+1);
+%*Theta1 = reshape(theta(1:num_theta1),Hiddden_Neurons,Input_Neurons+1);
+%*Theta2 =  reshape(theta(num_theta1+1:end),Output_Neurons,Hiddden_Neurons+1);
 
 %predict the handwrite recognition and give accuracy
-Prediction = predict(Theta1,Theta2,X);
-accuracy = mean(double(Prediction == y)) * 100;
-fprintf('\nLearning Accuracy: %f\n', accuracy)
+%*Prediction = predict(Theta1,Theta2,X_part);
+%*accuracy = mean(double(Prediction == y_part)) * 100;
+%*fprintf('\nLearning Accuracy: %f\n', accuracy)
 
 %Build Learning Curve to see next step
 [error_train, error_val] = LearningCurve(X_part(1:100,:),y_part(1:100,:),CV_X(1:100,:),CV_Y(1:100,:),lambda,Input_Neurons,Hiddden_Neurons,Output_Neurons,Init_Theta);
