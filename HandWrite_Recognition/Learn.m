@@ -1,8 +1,16 @@
+clear all
 %load data
-%*load('mnist.mat');
-load('ex4data1.mat');
-m = size(X, 1);
-
+load('mnist.mat');
+for i = 1 : length(trainY)
+	if trainY(i) == 0
+	trainY(i) = 10;
+end
+end
+for i = 1 : length(testY)
+	if testY(i) == 0
+	testY(i) = 10;
+end
+end
 % X size: 60,000 *784
 X = double(trainX);
 y = double(trainY); % y size: 60,000 * 1
@@ -16,7 +24,6 @@ CVSize = m * 0.2;
 
 TrainX = X(1:TrainSize,:);
 CV_X = X(TrainSize+1:end,:);
-testX = testX;
 TrainY = y(1:TrainSize,:);
 CV_Y = y(TrainSize+1:end,:);
 testY = testY';
@@ -39,16 +46,13 @@ Display_Data(X(sel, :));
 %Theta2 size: 10 * 15+1
 
 %randomly initialize theta
-Init_Theta = Initialize_Theta(Input_Neurons,Hiddden_Neurons,Output_Neurons);
-
+Init_Theta1 = Initialize_Theta(Input_Neurons,Hiddden_Neurons);
+Init_Theta2 = Initialize_Theta(Hiddden_Neurons,Output_Neurons);
+Init_Theta = [Init_Theta1(:);Init_Theta2(:)];
 %Cost function regularized & grandient regularized
 lambda = 0;
 %*[J,Grad] = costtest(X_part,y_part,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
-[J,Grad] = nnCostFunction(Init_Theta, ...
-                                   Input_Neurons, ...
-                                   Hiddden_Neurons, ...
-                                   10, ...
-                                   X, y, lambda);
+[J,Grad] = CostGradFunc(X_part,y_part,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
 %gradient check
 GradientCheck(lambda);
 
@@ -68,7 +72,7 @@ accuracy = mean(double(Prediction == y_part)) * 100;
 fprintf('\nLearning Accuracy: %f\n', accuracy)
 
 %Build Learning Curve to see next step
-[error_train, error_val] = LearningCurve(X_part(1:100,:),y_part(1:100,:),CV_X(1:100,:),CV_Y(1:100,:),lambda,Input_Neurons,Hiddden_Neurons,Output_Neurons,Init_Theta);
+[error_train, error_val] = LearningCurve(TrainX(1:100,:),TrainY(1:100,:),CV_X(1:100,:),CV_Y(1:100,:),lambda,Input_Neurons,Hiddden_Neurons,Output_Neurons,Init_Theta);
 plot(1:100, error_train, 1:100, error_val);
 title('Learning curve for neural network')
 legend('Train', 'Cross Validation')
