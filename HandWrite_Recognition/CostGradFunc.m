@@ -23,20 +23,22 @@ function [J, Grad] = CostGradFunc(X,Y,Init_Theta,Input_Neurons,Hiddden_Neurons,O
   y_matrix = eye_matrix(Y,:); % size = 48000 * 10
 
   regularized_term = lambda/(2*m) * (sum(sum(theta1(:,2:end).^2)) + sum(sum(theta2(:,2:end).^2)));
-  J = 1/m * ((-y_matrix * log10(hypo)) - ((1-y_matrix) * log10(1-hypo)));
+  J = 1/m * ((-y_matrix * log(hypo)) - ((1-y_matrix) * log(1-hypo)));
   J = trace(J);
   J = J + regularized_term;
   
 
 
 %Calculate Gradient
-  OutPutGrad = hypo - y_matrix' ; %size = 10 * 48000
-  Second_delta = (theta2' * OutPutGrad) .* SigmoidTranspose([one;z1]); % size = 16 * 48000
-  Second_delta = Second_delta(2:end,:);% size = 15 * 48000
-  regularized_1 = (lambda/m) * theta1(:,2:end);
-  regularized_2 = (lambda/m) * theta2(:,2:end);
-  Theta1_grad = (1/m) * Second_delta * a1; % 15 * 785
-  Theta2_grad = (1/m) * OutPutGrad * a2'; % 10 * 16
-  Theta1_grad(:,2:end) = Theta1_grad(:,2:end) + regularized_1;
-  Theta2_grad(:,2:end) = Theta2_grad(:,2:end) + regularized_2;
-  Grad = [Theta1_grad(:);Theta2_grad(:)];
+	output_delta = hypo - y_matrix';
+	z1_one = [one;z1];
+	second_delta = (theta2' * output_delta) .* SigmoidTranspose(z1_one);
+	second_delta = second_delta(2:end,:);
+	Regurized__1 = (lambda/m) * theta1(:,2:end);
+	Regurized__2 = (lambda/m) * theta2(:,2:end);
+	Theta1_grad = (1/m) * (second_delta * a1 );
+	Theta2_grad = (1/m) * (output_delta * a2');
+	Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + Regurized__1;
+	Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + Regurized__2;
+	Grad = [Theta1_grad(:);Theta2_grad(:)];
+  

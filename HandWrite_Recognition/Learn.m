@@ -1,6 +1,7 @@
 clear all
 %load data
 load('mnist.mat');
+
 for i = 1 : length(trainY)
 	if trainY(i) == 0
 	trainY(i) = 10;
@@ -29,8 +30,8 @@ CV_Y = y(TrainSize+1:end,:);
 testY = testY';
 
 %due to memory limit, shrink train size
-X_part = TrainX(1:10000,:);
-y_part = TrainY(1:10000,:);
+X = TrainX(1:10000,:);
+y = TrainY(1:10000,:);
 
 %construct neural network modal
 NetworkLayers = 3;
@@ -51,15 +52,18 @@ Init_Theta2 = Initialize_Theta(Hiddden_Neurons,Output_Neurons);
 Init_Theta = [Init_Theta1(:);Init_Theta2(:)];
 %Cost function regularized & grandient regularized
 lambda = 0;
-%*[J,Grad] = costtest(X_part,y_part,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
-[J,Grad] = CostGradFunc(X_part,y_part,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
+[J,Grad] = CostGradFunc(X,y,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
+
+pause;
+
 %gradient check
 GradientCheck(lambda);
+pause;
 
 %%Train Neural Network
 fprintf('\nTraining Neural Network... \n')
 
-theta = TrainNeurals(X_part,y_part,lambda,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons);
+theta = TrainNeurals(X,y,lambda,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons);
 
 %resize Theta
 num_theta1 = Hiddden_Neurons * (Input_Neurons +1);
@@ -67,8 +71,8 @@ Theta1 = reshape(theta(1:num_theta1),Hiddden_Neurons,Input_Neurons+1);
 Theta2 =  reshape(theta(num_theta1+1:end),Output_Neurons,Hiddden_Neurons+1);
 
 %predict the handwrite recognition and give accuracy
-Prediction = predict(Theta1,Theta2,X_part);
-accuracy = mean(double(Prediction == y_part)) * 100;
+Prediction = predict(Theta1,Theta2,X);
+accuracy = mean(double(Prediction == y)) * 100;
 fprintf('\nLearning Accuracy: %f\n', accuracy)
 
 %Build Learning Curve to see next step

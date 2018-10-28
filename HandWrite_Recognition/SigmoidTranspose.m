@@ -1,2 +1,3 @@
 function [x] = SigmoidTranspose(X)
-  x = X.*(1-X);
+  x = sigmoid(X) .* (1-sigmoid(X));
+end
