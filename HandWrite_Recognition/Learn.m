@@ -34,8 +34,8 @@ CV_Y = y(TrainSize+1:end,:);
 testY = testY';
 
 %due to memory limit, shrink train size
-X = TrainX(1:10000,:);
-y = TrainY(1:10000,:);
+X = TrainX(1:1000,:);
+y = TrainY(1:1000,:);
 
 %construct neural network architecture
 NetworkLayers = 3;
@@ -57,10 +57,11 @@ Init_Theta = [Init_Theta1(:);Init_Theta2(:)];
 lambda = 0; %first set lambda(penalty for weights to prevent overfitting)
 [J,Grad] = CostGradFunc(X,y,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
 
-pause;
-
 %gradient check(check if backpropagation is implemented correctly)
 GradientCheck(lambda);
+pause;
+fprintf('\nloading errors for differ modal + lambda... \n')
+ModelLambdaSelection(X,y,Input_Neurons,Output_Neurons,Init_Theta);
 pause;
 
 %%Train Neural Network
@@ -78,8 +79,8 @@ accuracy = mean(double(Prediction == y)) * 100;
 fprintf('\nLearning Accuracy: %f\n', accuracy)
 
 %Build Learning Curve to diagnose
-[error_train, error_val] = LearningCurve(TrainX(1:100,:),TrainY(1:100,:),CV_X(1:100,:),CV_Y(1:100,:),lambda,Input_Neurons,Hiddden_Neurons,Output_Neurons,Init_Theta);
-plot(1:100, error_train, 1:100, error_val);
+[error_train, error_val] = LearningCurve(TrainX(1:500,:),TrainY(1:500,:),CV_X(1:500,:),CV_Y(1:500,:),lambda,Input_Neurons,Hiddden_Neurons,Output_Neurons,Init_Theta);
+plot(1:500, error_train, 1:500, error_val);
 title('Learning curve for neural network')
 legend('Train', 'Cross Validation')
 xlabel('Number of training examples')
