@@ -61,7 +61,7 @@ lambda = 0; %first set lambda(penalty for weights to prevent overfitting)
 GradientCheck(lambda);
 pause;
 fprintf('\nloading errors for differ modal + lambda... \n')
-ModelLambdaSelection(X,y,Input_Neurons,Output_Neurons,Init_Theta);
+ModelLambdaSelection(CV_X,CV_Y,Input_Neurons,Output_Neurons);
 pause;
 
 %%Train Neural Network
