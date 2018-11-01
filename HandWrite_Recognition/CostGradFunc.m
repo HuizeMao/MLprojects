@@ -2,22 +2,22 @@ function [J, Grad] = CostGradFunc(X,Y,Init_Theta,Input_Neurons,Hiddden_Neurons,O
   num_theta1 = Hiddden_Neurons * (Input_Neurons +1);
   theta1 = reshape(Init_Theta(1:num_theta1),Hiddden_Neurons,Input_Neurons+1);
   theta2 =  reshape(Init_Theta(num_theta1+1:end),Output_Neurons,Hiddden_Neurons+1);
-  %Theta1 size: 15 * 784+1
-  %Theta2 size: 10 * 15+1
+  %Theta1 size: 100 * 784+1
+  %Theta2 size: 10 * 100+1
   %X size: 48000 * 784
   m = size(X,1);
   n = size(X,2);
   a1 = [ones(m,1),X];
   %a1 size: 48000 * 785
   z1 = theta1 * a1';
-  %z1 = a2 size: 15 * 48000
+  %z1 = a2 size: 100 * 48000
   a2 = sigmoid(z1);
   one = ones(1,(size(X,1)));
   a2 = [one;a2];
   %a2 size: 16 * 48000
   z2 = theta2 * a2;
   hypo = sigmoid(z2);
-  %display_hypo = hypo(:,1:10)
+  %dispHypo = hypo(:,1:10)
   %hypo size: 10 * 48000
   eye_matrix = eye(Output_Neurons);
   y_matrix = eye_matrix(Y,:); % size = 48000 * 10
@@ -26,7 +26,7 @@ function [J, Grad] = CostGradFunc(X,Y,Init_Theta,Input_Neurons,Hiddden_Neurons,O
   J = 1/m * ((-y_matrix * log(hypo)) - ((1-y_matrix) * log(1-hypo)));
   J = trace(J);
   J = J + regularized_term;
-  
+
 
 
 %Calculate Gradient
@@ -41,4 +41,3 @@ function [J, Grad] = CostGradFunc(X,Y,Init_Theta,Input_Neurons,Hiddden_Neurons,O
 	Theta1_grad(:, 2:end) = Theta1_grad(:, 2:end) + Regurized__1;
 	Theta2_grad(:, 2:end) = Theta2_grad(:, 2:end) + Regurized__2;
 	Grad = [Theta1_grad(:);Theta2_grad(:)];
-  
