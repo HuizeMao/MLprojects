@@ -4,7 +4,8 @@ clc
 %load data
 load('mnist.mat');
 
-%convert 0s to 10s for X and y(they suppose to be 10)
+%convert 0s to 10s for X and y
+%(and later convert the predicted result back to 0)
 for i = 1 : length(trainY)
 	if trainY(i) == 0
 	trainY(i) = 10;
@@ -74,7 +75,7 @@ theta = TrainNeurals(X,y,lambda,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_
 %resize Theta
 num_theta1 = Hiddden_Neurons * (Input_Neurons +1);
 Theta1 = reshape(theta(1:num_theta1),Hiddden_Neurons,Input_Neurons+1);
-Theta2 =  reshape(theta(num_theta1+1:end),Output_Neurons,Hiddden_Neurons+1);
+Theta1 =  reshape(theta(num_theta1+1:end),Output_Neurons,Hiddden_Neurons+1);
 
 %predict the handwrite recognition and give accuracy
 Prediction = predict(Theta1,Theta2,X);
@@ -98,4 +99,6 @@ fprintf('# Training Examples\tTrain Error\tCross Validation Error\n');
 for i = 1:m
     fprintf('  \t%d\t\t%f\t%f\n', i, error_train(i), error_val(i));
 end
-%CV set for select lambda
+
+%Ask input and predict
+PredictUserInput;
