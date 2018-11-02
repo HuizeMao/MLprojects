@@ -61,8 +61,8 @@ lambda = 0.43; %first set lambda(penalty for weights to prevent overfitting)
 J
 %gradient check(check if backpropagation is implemented correctly)
 GradientCheck(lambda);
-pause;
-fprintf('\nloading errors for differ modal + lambda... \n')
+%pause;
+%fprintf('\nloading errors for differ modal + lambda... \n')
 
 %*ModelLambdaSelection(X,y,CV_X,CV_Y,Input_Neurons,Output_Neurons);
 
@@ -75,7 +75,7 @@ theta = TrainNeurals(X,y,lambda,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_
 %resize Theta
 num_theta1 = Hiddden_Neurons * (Input_Neurons +1);
 Theta1 = reshape(theta(1:num_theta1),Hiddden_Neurons,Input_Neurons+1);
-Theta1 =  reshape(theta(num_theta1+1:end),Output_Neurons,Hiddden_Neurons+1);
+Theta2 =  reshape(theta(num_theta1+1:end),Output_Neurons,Hiddden_Neurons+1);
 
 %predict the handwrite recognition and give accuracy
 Prediction = predict(Theta1,Theta2,X);
@@ -96,7 +96,7 @@ ylabel('Error')
 axis([0 50 0 150])
 
 fprintf('# Training Examples\tTrain Error\tCross Validation Error\n');
-for i = 1:m
+for i = 1:length(error_train)
     fprintf('  \t%d\t\t%f\t%f\n', i, error_train(i), error_val(i));
 end
 
