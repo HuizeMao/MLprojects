@@ -35,13 +35,13 @@ testX = double(testX);
 testY = double(testY');
 
 %due to memory limit, shrink train size
-X = TrainX(1:1000,:);
-y = TrainY(1:1000,:);
+X = TrainX(1:2000,:);
+y = TrainY(1:2000,:);
 
 %construct neural network architecture
 NetworkLayers = 3;
 Input_Neurons = 784;
-Hiddden_Neurons = 100;
+Hiddden_Neurons = 124;
 Output_Neurons = 10;
 
 %plot part of input data
@@ -55,14 +55,16 @@ Init_Theta2 = Initialize_Theta(Hiddden_Neurons,Output_Neurons); %Theta2 size: 10
 Init_Theta = [Init_Theta1(:);Init_Theta2(:)];
 
 %Use cost function to compute cost&grandient
-lambda = 0.01; %first set lambda(penalty for weights to prevent overfitting)
+lambda = 0.43; %first set lambda(penalty for weights to prevent overfitting)
 [J,Grad] = CostGradFunc(X,y,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
 J
 %gradient check(check if backpropagation is implemented correctly)
 GradientCheck(lambda);
 pause;
 fprintf('\nloading errors for differ modal + lambda... \n')
-ModelLambdaSelection(CV_X,CV_Y,Input_Neurons,Output_Neurons);
+
+%*ModelLambdaSelection(X,y,CV_X,CV_Y,Input_Neurons,Output_Neurons);
+
 pause;
 
 %%Train Neural Network
