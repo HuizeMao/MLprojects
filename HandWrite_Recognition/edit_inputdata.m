@@ -152,6 +152,7 @@ for i = 1: length(p_nines)
   cur = trainX(p_nines(i),:);
   cur = reshape(cur,28,28);
   cur = imrotate(cur,270);
+  cur = fliplr(cur);
   ninesX(i,:) = cur(:)';
 endfor
 
