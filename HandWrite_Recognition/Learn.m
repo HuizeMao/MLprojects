@@ -42,7 +42,7 @@ y = TrainY(1:2000,:);
 %construct neural network architecture
 NetworkLayers = 3;
 Input_Neurons = 784;
-Hiddden_Neurons = 180;
+Hiddden_Neurons = 124;
 Output_Neurons = 10;
 
 %plot part of input data
