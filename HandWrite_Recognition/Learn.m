@@ -2,7 +2,7 @@ clear all
 clc
 
 %load data
-load('mnist.mat');
+load('Inputdata.mat');
 
 %convert 0s to 10s for X and y
 %(and later convert the predicted result back to 0)
@@ -16,33 +16,28 @@ for i = 1 : length(testY)
 	testY(i) = 10;
 end
 end
+for i = 1 : length(CV_Y)
+	if CV_Y(i) == 0
+	CV_Y(i) = 10;
+end
+end
 
 % Define some useful variables
-X = double(trainX); % X size: 60,000 *784
-y = double(trainY); % y size: 60,000 * 1
-y = y';
+X = trainX; % X size: 60,000 *784
+y = trainY; % y size: 60,000 * 1
+%set Cross Validation set
+CV_X = CV_X;
+CV_Y = CV_Y;
+%set test set
+testX = testX;
+testY = testY;
 m = size(X,1); % number of training examples
 n = size(X,2);% number of features
-
-%set Cross Validation set
-TrainSize = m * 0.8;
-CVSize = m * 0.2;
-
-TrainX = X(1:TrainSize,:);
-CV_X = X(TrainSize+1:end,:);
-TrainY = y(1:TrainSize,:);
-CV_Y = y(TrainSize+1:end,:);
-testX = double(testX);
-testY = double(testY');
-
-%due to memory limit, shrink train size
-X = TrainX(1:2000,:);
-y = TrainY(1:2000,:);
 
 %construct neural network architecture
 NetworkLayers = 3;
 Input_Neurons = 784;
-Hiddden_Neurons = 200;
+Hiddden_Neurons = 400;%156;
 Output_Neurons = 10;
 
 %plot part of input data
@@ -56,17 +51,17 @@ Init_Theta2 = Initialize_Theta(Hiddden_Neurons,Output_Neurons); %Theta2 size: 10
 Init_Theta = [Init_Theta1(:);Init_Theta2(:)];
 
 %Use cost function to compute cost&grandient
-lambda = 0.43; %first set lambda(penalty for weights to prevent overfitting)
+lambda = 1.82; %first set lambda(penalty for weights to prevent overfitting)
 [J,Grad] = CostGradFunc(X,y,Init_Theta,Input_Neurons,Hiddden_Neurons,Output_Neurons,lambda);
 J
 %gradient check(check if backpropagation is implemented correctly)
 GradientCheck(lambda);
-%pause;
+pause;
 %fprintf('\nloading errors for differ modal + lambda... \n')
 
-%*ModelLambdaSelection(X,y,CV_X,CV_Y,Input_Neurons,Output_Neurons);
+%ModelLambdaSelection(X,y,CV_X,CV_Y,Input_Neurons,Output_Neurons);
 
-pause;
+%pause;
 
 %%Train Neural Network
 fprintf('\nTraining Neural Network... \n')
@@ -87,7 +82,9 @@ accuracyTest = mean(double(TestPrediction == testY)) * 100;
 fprintf('\nTest Accuracy: %f\n', accuracyTest)
 
 %Build Learning Curve to diagnose
-[error_train, error_val] = LearningCurve(X(1:50,:),y(1:50,:),CV_X(1:50,:),CV_Y(1:50,:),lambda,Input_Neurons,Hiddden_Neurons,Output_Neurons,Init_Theta);
+sel = randperm(size(CV_X,1));
+sel = sel(1:50);
+[error_train, error_val] = LearningCurve(X(sel,:),y(sel,:),CV_X(sel,:),CV_Y(sel,:),lambda,Input_Neurons,Hiddden_Neurons,Output_Neurons,Init_Theta);
 plot(1:50, error_train, 1:50, error_val);
 title('Learning curve for neural network')
 legend('Train', 'Cross Validation')
