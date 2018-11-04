@@ -1,5 +1,9 @@
 image(reshape(onesX(1,:),28,28))
 
+
+trainX(401:600,:) = twosX(1:200,:);
+CV_X(301:450,:) = twosX(201:350,:);
+
 save MNIST_TenSaperate.mat zerosX onesX twosX threesX foursX fivesX sixesX sevensX eightsX ninesX
 save InputData.mat CV_X CV_Y testX testY trainX trainY
 trainX = [zerosX(1:200,:);onesX(1:200,:);twosX(1:200,:);threesX(1:200,:);...
@@ -78,6 +82,7 @@ for i = 1: length(p_twos)
   cur = trainX(p_twos(i),:);
   cur = reshape(cur,28,28);
   cur = imrotate(cur,270);
+  cur = fliplr(cur);
   twosX(i,:) = cur(:)';
 endfor
 
