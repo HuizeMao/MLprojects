@@ -3,6 +3,7 @@ image(reshape(onesX(1,:),28,28))
 
 trainX(401:600,:) = twosX(1:200,:);
 CV_X(301:450,:) = twosX(201:350,:);
+testX(381:570,:) = twosX(351:540,:);
 
 save MNIST_TenSaperate.mat zerosX onesX twosX threesX foursX fivesX sixesX sevensX eightsX ninesX
 save InputData.mat CV_X CV_Y testX testY trainX trainY
