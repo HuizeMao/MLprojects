@@ -1,9 +1,10 @@
 while true
-  str_input = input('Enter the name of the image with (. format) and put it within a single quotation mark: ');
+  str_input = input('Enter the name of the image with (. format) and put it within a single quotation mark(e.g `ex_1.jpg`): ');
 %my1.jpg
   user_input = imread(str_input);
-  %user_input = UserInputProcess(user_input)
-  user_input = double(user_input(:)');
+  user_input = double(user_input);
+  user_input = UserInputProcess(user_input);
+  user_input = user_input(:)';
   prediction = predict(Theta1,Theta2,user_input);
   fprintf('\n')
   prediction
@@ -16,7 +17,8 @@ endwhile
 %3 - ok
 %4 - ok
 %5 - ok
-%6 - ok
+%6 - ok       /
 %7 - ok
-%8 - ok
-%9 - 3
+%8 - ok    /
+%9 - 3    /
+%'UserInput0.jpg'

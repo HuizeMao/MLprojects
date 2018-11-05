@@ -82,20 +82,20 @@ accuracyTest = mean(double(TestPrediction == testY)) * 100;
 fprintf('\nTest Accuracy: %f\n', accuracyTest)
 
 %Build Learning Curve to diagnose
-sel = randperm(size(CV_X,1));
-sel = sel(1:50);
-[error_train, error_val] = LearningCurve(X(sel,:),y(sel,:),CV_X(sel,:),CV_Y(sel,:),lambda,Input_Neurons,Hiddden_Neurons,Output_Neurons,Init_Theta);
-plot(1:50, error_train, 1:50, error_val);
-title('Learning curve for neural network')
-legend('Train', 'Cross Validation')
-xlabel('Number of training examples')
-ylabel('Error')
-axis([0 50 0 150])
+%*sel = randperm(size(CV_X,1));
+%*sel = sel(1:50);
+%*[error_train, error_val] = LearningCurve(X(sel,:),y(sel,:),CV_X(sel,:),CV_Y(sel,:),lambda,Input_Neurons,Hiddden_Neurons,Output_Neurons,Init_Theta);
+%*plot(1:50, error_train, 1:50, error_val);
+%*title('Learning curve for neural network')
+%*legend('Train', 'Cross Validation')
+%*xlabel('Number of training examples')
+%*ylabel('Error')
+%*axis([0 50 0 150])
 
-fprintf('# Training Examples\tTrain Error\tCross Validation Error\n');
-for i = 1:length(error_train)
-    fprintf('  \t%d\t\t%f\t%f\n', i, error_train(i), error_val(i));
-end
+%*fprintf('# Training Examples\tTrain Error\tCross Validation Error\n');
+%*for i = 1:length(error_train)
+    %*fprintf('  \t%d\t\t%f\t%f\n', i, error_train(i), error_val(i));
+%*end
 
 %Ask input and predict
 PredictUserInput;
