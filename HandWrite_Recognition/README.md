@@ -1,4 +1,4 @@
-This ML algorithm recognises handwriting digits from 0 - 9. It prefers images with background black and digit white with size 28 * 28.
+This ML algorithm uses Neural Network to recognise handwriting digits from 0 - 9. It prefers images with background black and digit white with size 28 * 28.
 
 The input data is modified from original MNIST data by rotation/reflection in order to make it look like the digit.
 
