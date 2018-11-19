@@ -25,14 +25,15 @@ def GiniCostFunc(groups,classes):
 def get_split(dataset):
     y = list(set(row[-1] for row in dataset))
     n_ind,ThresholdVal,gini_score, split_groups = 999,999,999,None
-    for n in range(len(dataset[0]-1)):
+    for n in range(len(dataset[0])-1):
         for row in dataset:
             groups = draft_split(n,row[n],dataset)
-            gini = GiniCostFunc(groups,dataset)
+            gini = round(GiniCostFunc(groups,y),3)
             print('')
+            print("x{} < {} Gini Score = {} ".format(n+1,row[n],gini))
             if gini < ThresholdVal:
                 n_ind,ThresholdVal,gini_score, split_groups = n, row[n],gini,groups
-        return {'feature_index':n_ind,''}
+    return {'feature_index':n_ind,'ThresholdVal':ThresholdVal,'groups':split_groups}
     split,gini_score,
 dataset = [[2.771244718,1.784783929,0],
 	[1.728571309,1.169761413,0],
@@ -45,4 +46,4 @@ dataset = [[2.771244718,1.784783929,0],
 	[10.12493903,3.234550982,1],
 	[6.642287351,3.319983761,1]]
 
-print(GiniCostFunc([[[1, 0], [1, 0]], [[1, 1], [1, 1]]], [0, 1]))
+split = get_split(dataset)
