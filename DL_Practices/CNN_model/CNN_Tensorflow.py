@@ -132,7 +132,7 @@ def forward_propagation(X, parameters):
 
     return Z3
 
-#tf.reset_default_graph()
+tf.reset_default_graph()
 
 with tf.Session() as sess:
     np.random.seed(1)
@@ -246,8 +246,6 @@ def model(X_train, Y_train, X_test, Y_test, learning_rate = 0.009,
                 ### END CODE HERE ###
 
                 minibatch_cost += temp_cost / num_minibatches
-
-
             # Print the cost every epoch
             if print_cost == True and epoch % 5 == 0:
                 print ("Cost after epoch %i: %f" % (epoch, minibatch_cost))
@@ -273,7 +271,7 @@ def model(X_train, Y_train, X_test, Y_test, learning_rate = 0.009,
         test_accuracy = accuracy.eval({X: X_test, Y: Y_test})
         print("Train Accuracy:", train_accuracy)
         print("Test Accuracy:", test_accuracy)
-        
+
         return train_accuracy, test_accuracy, parameters
 
 _, _, parameters = model(X_train, Y_train, X_test, Y_test)
