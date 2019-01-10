@@ -32,7 +32,7 @@ function [J, Grad] = CostGradFunc(X,Y,Init_Theta,Input_Neurons,Hiddden_Neurons,O
 %Calculate Gradient
 	output_delta = hypo - y_matrix';
 	z1_one = [one;z1];
-	second_delta = (theta2' * output_delta) .* SigmoidTranspose(z1_one);
+	second_delta = (theta2' * output_delta) .* SigmoidGradient(z1_one);
 	second_delta = second_delta(2:end,:);
 	Regurized__1 = (lambda/m) * theta1(:,2:end);
 	Regurized__2 = (lambda/m) * theta2(:,2:end);
