@@ -82,14 +82,16 @@ Train the model on train data by calling model.fit(x = ..., y = ..., epochs = ..
 Test the model on test data by calling model.evaluate(x = ..., y = ...)
 """
 #create model
-happyModel = HappyModel(X_train.shape[1:])
+happyModel = load_model("happyModel.h5")
 #Compile model with optimizer
-happyModel.compile(optimizer = "adam", loss = "binary_crossentropy", metrics = ["accuracy"])
+##happyModel.compile(optimizer = "adam", loss = "binary_crossentropy", metrics = ["accuracy"])
 #train model
-happyModel.fit(x = X_train, y = Y_train, epochs = 10, batch_size = 50)
+##happyModel.fit(x = X_train, y = Y_train, epochs = 10, batch_size = 50)
+
 # save/load model and evaluate
 """happyModel.save('happyModel.h5')
 happyModel = load_model('happyModel.h5')"""
 preds = happyModel.evaluate(x = X_test, y = Y_test)
+print(happyModel.predict(X_test[0]))
 #gives  the details of your layers in a table with the sizes of its inputs/outputs
 happyModel.summary()
